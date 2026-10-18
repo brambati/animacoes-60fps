@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animações a 60fps</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Animações a <span>60fps</span></h1>
+    <p>Abra o DevTools › Performance (ou ative "Frame Rendering Stats") e compare.</p>
+  </header>
+
+  <main>
+    <!-- 1. width × scaleX -->
+    <section>
+      <h2>1 · width × scaleX</h2>
+      <p>Passe o mouse nas duas barras. O visual é o mesmo; o custo, não.</p>
+      <div class="lane"><code class="ruim">transition: width</code><div class="box-ruim"></div></div>
+      <div class="lane"><code class="bom">transition: transform</code><div class="box-boa"></div></div>
+    </section>
+
+    <!-- 2. top/left × translate -->
+    <section>
+      <h2>2 · left × translate</h2>
+      <div class="pista">
+        <div class="bola bola-ruim">left</div>
+        <div class="bola bola-boa">translate</div>
+      </div>
+    </section>
+
+    <!-- 3. entrada com opacity + translateY -->
+    <section>
+      <h2>3 · Entrada sem reflow</h2>
+      <div class="cards">
+        <article class="card fade-in-up" data-delay="0">opacity</article>
+        <article class="card fade-in-up" data-delay="120">+</article>
+        <article class="card fade-in-up" data-delay="240">translateY</article>
+      </div>
+    </section>
+
+    <!-- 4. will-change -->
+    <section>
+      <h2>4 · will-change</h2>
+      <p>Veja em DevTools › Layers: este card tem a própria camada na GPU.</p>
+      <div class="card card-animado">will-change: transform</div>
+    </section>
+
+    <!-- 5. Web Animations API -->
+    <section>
+      <h2>5 · Web Animations API</h2>
+      <div class="palco"><div class="box"></div></div>
+      <div class="botoes">
+        <button id="btn-pause">play / pause</button>
+        <button id="btn-reverse">reverse()</button>
+        <button id="btn-fast">playbackRate = 2</button>
+        <button id="btn-seq">sequência com .finished</button>
+      </div>
+      <div class="palco"><div class="box box-seq"></div></div>
+    </section>
+  </main>
+
+  <script src="animations.js" defer></script>
+</body>
+</html>
